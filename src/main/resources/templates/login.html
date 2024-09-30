@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <!--<link rel="stylesheet" href="style.css">  Inclua seu CSS -->
+</head>
+<body>
+    <h2>Login</h2>
+    <form id="loginForm" th:action="@{/login}" method="post">
+        <label for="username">Nome de Usuário:</label>
+        <input type="text" id="username" name="username" required>
+        
+        <label for="password">Senha:</label>
+        <input type="password" id="password" name="password" required>
+        
+        <button type="submit">Entrar</button>
+    </form>
+
+    <p>Não tem uma conta? <a th:href="@{/cadastro}">Cadastre-se aqui</a></p> <!-- Link para a página de cadastro -->
+
+    <script src="script.js"></script>
+</body>
+</html>
