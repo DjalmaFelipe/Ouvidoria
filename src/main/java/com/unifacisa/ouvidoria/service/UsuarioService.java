@@ -23,14 +23,12 @@ public class UsuarioService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        // Busca o usuário no banco de dados
+       
         Usuario usuario = usuarioRepository.findByUsername(username)
             .orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado"));
 
-        // Converte o role de string para uma lista de GrantedAuthority
         List<GrantedAuthority> authorities = List.of(new SimpleGrantedAuthority(usuario.getRole()));
 
-        // Retorna um UserDetails com username, password e authorities
         return new User(usuario.getUsername(), usuario.getPassword(), authorities);
     }
 }

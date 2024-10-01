@@ -3,9 +3,8 @@ package com.unifacisa.ouvidoria.dto;
 public class UsuarioRegistroDTO {
     private String username;
     private String password;
-    private String role;  // Pode ser "USER", "FUNCIONARIO", etc.
-
-    // Getters e Setters
+    private String role; 
+    
     public String getUsername() {
         return username;
     }

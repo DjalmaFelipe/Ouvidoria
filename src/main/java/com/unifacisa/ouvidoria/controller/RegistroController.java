@@ -23,21 +23,18 @@ public class RegistroController {
 
     @PostMapping
     public String registrarNovoUsuario(@RequestBody UsuarioRegistroDTO usuarioDTO) {
-        // Verificar se o usuário já existe
+     
         if (usuarioRepository.findByUsername(usuarioDTO.getUsername()).isPresent()) {
             return "Usuário já existe!";
         }
 
-        // Codificar a senha
         String senhaCodificada = passwordEncoder.encode(usuarioDTO.getPassword());
 
-        // Criar o novo usuário
         Usuario novoUsuario = new Usuario();
         novoUsuario.setUsername(usuarioDTO.getUsername());
         novoUsuario.setPassword(senhaCodificada);
         novoUsuario.setRole(usuarioDTO.getRole());
 
-        // Salvar no banco de dados
         usuarioRepository.save(novoUsuario);
 
         return "Usuário registrado com sucesso!";

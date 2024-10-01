@@ -8,11 +8,16 @@ public class PageController {
 
     @GetMapping("/login")
     public String showLoginPage() {
-        return "login";  // Vai procurar login.html em /templates/
+        return "login";  
     }
 
     @GetMapping("/cadastro")
     public String showCadastroPage() {
-        return "cadastro";  // Vai procurar cadastro.html em /templates/
+        return "cadastro"; 
+    }
+    
+    @GetMapping("/solicitacao")
+    public String showSolicitacaoPage() {
+        return "solicitacao"; 
     }
 }

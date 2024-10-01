@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulário de Solicitação</title>
+    <link rel="stylesheet" href="/static/styles.css"> <!-- Link para seu CSS, se necessário -->
+</head>
+<body>
+
+    <form id="solicitacaoForm" th:action="@{/api/solicitacao}" method="post">
+        <label for="nome">Nome:</label>
+        <input type="text" id="nome" name="nome" required>
+
+        <label for="descricao">Descrição:</label>
+        <textarea id="descricao" name="descricao" required></textarea>
+
+        <button type="submit">Criar Solicitação</button>
+    </form>
+
+    <h3>Minhas Solicitações</h3>
+    <ul id="listaSolicitacoes" th:each="solicitacao : ${solicitacoes}">
+        <li th:text="${solicitacao.nome} + ' - ' + ${solicitacao.descricao} + ' (Criada em: ' + ${#dates.format(solicitacao.dataCriacao, 'dd/MM/yyyy')} + ')'"></li>
+    </ul>
+
+    <script>
+        // Handle form submission
+        document.getElementById('solicitacaoForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent default form submission
+
+            const solicitacaoData = {
+                nome: document.getElementById('nome').value,
+                descricao: document.getElementById('descricao').value
+            };
+
+            // Send the data to the backend using fetch
+            fetch('/api/solicitacao', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(solicitacaoData)
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Erro ao criar solicitação');
+                }
+                return response.json();
+            })
+            .then(data => {
+                alert('Solicitação criada com sucesso!');
+                document.getElementById('solicitacaoForm').reset(); // Clear the form
+                carregarSolicitacoes(); // Reload the list of requests
+            })
+            .catch(error => {
+                alert('Erro: ' + error.message);
+            });
+        });
+
+        // Load the user's previous requests
+        function carregarSolicitacoes() {
+            fetch('/api/solicitacao')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Erro ao carregar solicitações');
+                }
+                return response.json();
+            })
+            .then(solicitacoes => {
+                const lista = document.getElementById('listaSolicitacoes');
+                lista.innerHTML = ''; // Clear the list before adding requests
+                solicitacoes.forEach(solicitacao => {
+                    const item = document.createElement('li');
+                    item.textContent = `${solicitacao.nome} - ${solicitacao.descricao} (Criada em: ${new Date(solicitacao.dataCriacao).toLocaleDateString()})`;
+                    lista.appendChild(item);
+                });
+            })
+            .catch(error => {
+                console.error('Erro ao carregar solicitações:', error);
+            });
+        }
+
+        // Call on page load
+        document.addEventListener('DOMContentLoaded', carregarSolicitacoes);
+    </script>
+
+</body>
+</html>
