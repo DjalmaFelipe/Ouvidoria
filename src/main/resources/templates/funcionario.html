@@ -3,32 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gerenciar Solicitações</title>
+    <title>Painel do Funcionário</title>
     <link rel="stylesheet" href="/static/styles.css">
 </head>
 <body>
 
-<h3>Solicitações Pendentes</h3>
+<h2>Lista de Solicitações</h2>
 <ul id="listaSolicitacoes"></ul>
 
 <script>
     function carregarSolicitacoes() {
-        fetch('/api/solicitacao')
+        fetch('/funcionario/solicitacoes')
         .then(response => response.json())
         .then(solicitacoes => {
             const lista = document.getElementById('listaSolicitacoes');
-            lista.innerHTML = ''; // Limpa a lista atual
+            lista.innerHTML = '';
             solicitacoes.forEach(solicitacao => {
                 const item = document.createElement('li');
-                item.textContent = `${solicitacao.nome} - ${solicitacao.descricao} (Status: ${solicitacao.status})`;
-                
-                // Botão para concluir a solicitação
-                const button = document.createElement('button');
-                button.textContent = 'Concluir Solicitação';
-                button.onclick = () => concluirSolicitacao(solicitacao.id);
-                
-                item.appendChild(button); // Adiciona o botão ao item da lista
-                lista.appendChild(item); // Adiciona o item da lista à lista principal
+                item.textContent = `${solicitacao.nome} - ${solicitacao.descricao} (Criada em: ${new Date(solicitacao.dataCriacao).toLocaleDateString()})`;
+
+                const respostaInput = document.createElement('textarea');
+                respostaInput.placeholder = 'Digite sua resposta aqui';
+                respostaInput.id = `resposta-${solicitacao.id}`;
+
+                const botaoConcluir = document.createElement('button');
+                botaoConcluir.textContent = 'Concluir com Resposta';
+                botaoConcluir.onclick = function() {
+                    const resposta = document.getElementById(`resposta-${solicitacao.id}`).value;
+                    concluirSolicitacao(solicitacao.id, resposta);
+                };
+
+                item.appendChild(respostaInput);
+                item.appendChild(botaoConcluir);
+                lista.appendChild(item);
             });
         })
         .catch(error => {
@@ -36,26 +43,26 @@
         });
     }
 
-    function concluirSolicitacao(id) {
-        fetch(`/api/solicitacao/${id}/status`, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify('CONCLUIDO') // Envia o status 'CONCLUIDO'
-        })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Erro ao concluir solicitação');
-            }
-            alert('Solicitação concluída com sucesso!');
-            carregarSolicitacoes(); // Recarrega a lista após concluir a solicitação
-        })
-        .catch(error => {
-            alert('Erro: ' + error.message);
-        });
-    }
-
+	function concluirSolicitacao(id, resposta) {
+	    fetch(`/api/solicitacao/${id}/responder`, { 
+	        method: 'POST',
+	        headers: {
+	            'Content-Type': 'application/x-www-form-urlencoded'
+	        },
+	        body: `resposta=${encodeURIComponent(resposta)}`
+	    })
+	    .then(response => {
+	        if (response.ok) {
+	            alert('Solicitação concluída com sucesso!');
+	            carregarSolicitacoes(); 
+	        } else {
+	            throw new Error('Erro ao concluir a solicitação');
+	        }
+	    })
+	    .catch(error => {
+	        alert('Erro: ' + error.message);
+	    });
+	}
     document.addEventListener('DOMContentLoaded', carregarSolicitacoes);
 </script>
 

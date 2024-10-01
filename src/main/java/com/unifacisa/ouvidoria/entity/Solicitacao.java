@@ -29,10 +29,22 @@ public class Solicitacao {
     @Column(name="data")
     private LocalDateTime dataCriacao;
     
+    @Column(name="status")
     @Enumerated(EnumType.STRING)
-    private Status status; 
+    private Status status;
     
-    public Status getStatus() {
+    @Column(name="resposta")
+    private String resposta;
+    
+    public String getResposta() {
+		return resposta;
+	}
+
+	public void setResposta(String resposta) {
+		this.resposta = resposta;
+	}
+
+	public Status getStatus() {
 		return status;
 	}
 

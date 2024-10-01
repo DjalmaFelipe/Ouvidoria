@@ -69,7 +69,7 @@
                     lista.innerHTML = ''; 
                     solicitacoes.forEach(solicitacao => {
                         const item = document.createElement('li');
-                        item.textContent = `${solicitacao.nome} - ${solicitacao.descricao} (Criada em: ${new Date(solicitacao.dataCriacao).toLocaleDateString()})`;
+                        item.textContent = `${solicitacao.nome} - ${solicitacao.descricao} (Criada em: ${new Date(solicitacao.dataCriacao).toLocaleDateString()}) ${solicitacao.status} ${solicitacao.resposta}`;
                         lista.appendChild(item);
                     });
                 })

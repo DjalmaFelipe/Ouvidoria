@@ -1,6 +1,7 @@
 package com.unifacisa.ouvidoria.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
@@ -38,11 +39,15 @@ public class SolicitacaoController {
         return solicitacaoRepository.findByUsuario(usuario);
     }
     
-    @PutMapping("/{id}/status")
-    public Solicitacao alterarStatus(@PathVariable Long id, @RequestBody Status status) {
-        Solicitacao solicitacao = solicitacaoRepository.findById(id).orElseThrow();
-        solicitacao.setStatus(status);
-        return solicitacaoRepository.save(solicitacao);
+    
+    @PostMapping("/{id}/responder")
+    public ResponseEntity<?> responderSolicitacao(@PathVariable Long id, @RequestParam String resposta) {
+        Solicitacao solicitacao = solicitacaoRepository.findById(id).orElseThrow(() -> new RuntimeException("Solicitação não encontrada."));
+        solicitacao.setResposta(resposta);
+        solicitacao.setStatus(Status.CONCLUIDO);
+        solicitacaoRepository.save(solicitacao);
+        return ResponseEntity.ok().build();
     }
+
 
 }
