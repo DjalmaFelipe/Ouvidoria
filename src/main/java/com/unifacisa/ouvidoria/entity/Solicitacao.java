@@ -4,6 +4,8 @@ import java.time.LocalDateTime;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -27,7 +29,18 @@ public class Solicitacao {
     @Column(name="data")
     private LocalDateTime dataCriacao;
     
-    @ManyToOne
+    @Enumerated(EnumType.STRING)
+    private Status status; 
+    
+    public Status getStatus() {
+		return status;
+	}
+
+	public void setStatus(Status status) {
+		this.status = status;
+	}
+
+	@ManyToOne
     @JoinColumn(name = "usuario_id")
     private Usuario usuario;
 

@@ -69,7 +69,7 @@ public class SecurityConfig {
                 if (authentication.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_USER"))) {
                     response.sendRedirect("/solicitacao");
                 } else if (authentication.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_FUNCIONARIO"))) {
-                    response.sendRedirect("/funcionario.html");
+                    response.sendRedirect("/funcionario");
                 } else {
                     response.sendRedirect("/login?error");
                 }

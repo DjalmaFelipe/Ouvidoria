@@ -12,4 +12,9 @@ public class FuncionarioController {
     public String funcionarioHome() {
         return "Bem-vindo, Funcionário!";
     }
+    
+    @GetMapping("/funcionario.html")
+    public String exibirPaginaFuncionario() {
+        return "funcionario";
+    }
 }

@@ -6,6 +6,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import com.unifacisa.ouvidoria.entity.Solicitacao;
+import com.unifacisa.ouvidoria.entity.Status;
 import com.unifacisa.ouvidoria.entity.Usuario;
 import com.unifacisa.ouvidoria.repository.SolicitacaoRepository;
 import com.unifacisa.ouvidoria.repository.UsuarioRepository;
@@ -36,4 +37,12 @@ public class SolicitacaoController {
         Usuario usuario = usuarioRepository.findByUsername(userDetails.getUsername()).orElseThrow();
         return solicitacaoRepository.findByUsuario(usuario);
     }
+    
+    @PutMapping("/{id}/status")
+    public Solicitacao alterarStatus(@PathVariable Long id, @RequestBody Status status) {
+        Solicitacao solicitacao = solicitacaoRepository.findById(id).orElseThrow();
+        solicitacao.setStatus(status);
+        return solicitacaoRepository.save(solicitacao);
+    }
+
 }

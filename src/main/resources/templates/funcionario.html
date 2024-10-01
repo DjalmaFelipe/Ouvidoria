@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerenciar Solicitações</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+
+<h3>Solicitações Pendentes</h3>
+<ul id="listaSolicitacoes"></ul>
+
+<script>
+    function carregarSolicitacoes() {
+        fetch('/api/solicitacao')
+        .then(response => response.json())
+        .then(solicitacoes => {
+            const lista = document.getElementById('listaSolicitacoes');
+            lista.innerHTML = ''; // Limpa a lista atual
+            solicitacoes.forEach(solicitacao => {
+                const item = document.createElement('li');
+                item.textContent = `${solicitacao.nome} - ${solicitacao.descricao} (Status: ${solicitacao.status})`;
+                
+                // Botão para concluir a solicitação
+                const button = document.createElement('button');
+                button.textContent = 'Concluir Solicitação';
+                button.onclick = () => concluirSolicitacao(solicitacao.id);
+                
+                item.appendChild(button); // Adiciona o botão ao item da lista
+                lista.appendChild(item); // Adiciona o item da lista à lista principal
+            });
+        })
+        .catch(error => {
+            console.error('Erro ao carregar solicitações:', error);
+        });
+    }
+
+    function concluirSolicitacao(id) {
+        fetch(`/api/solicitacao/${id}/status`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify('CONCLUIDO') // Envia o status 'CONCLUIDO'
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Erro ao concluir solicitação');
+            }
+            alert('Solicitação concluída com sucesso!');
+            carregarSolicitacoes(); // Recarrega a lista após concluir a solicitação
+        })
+        .catch(error => {
+            alert('Erro: ' + error.message);
+        });
+    }
+
+    document.addEventListener('DOMContentLoaded', carregarSolicitacoes);
+</script>
+
+</body>
+</html>
