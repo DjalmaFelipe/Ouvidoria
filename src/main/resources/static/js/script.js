@@ -1,19 +1,19 @@
 document.getElementById('cadastroForm').addEventListener('submit', function(event) {
-    event.preventDefault(); // Previne o envio padrão do formulário
+    event.preventDefault(); 
 
-    // Coleta os dados do formulário
+    
     const username = document.getElementById('username').value;
     const password = document.getElementById('password').value;
     const role = document.getElementById('role').value;
 
-    // Cria um objeto com os dados do usuário
+    
     const usuarioData = {
         username: username,
         password: password,
         role: role
     };
 
-    // Envia os dados para o backend usando fetch
+   
     fetch('http://localhost:8080/api/registro', {
         method: 'POST',
         headers: {
@@ -25,11 +25,11 @@ document.getElementById('cadastroForm').addEventListener('submit', function(even
         if (!response.ok) {
             throw new Error('Erro ao cadastrar usuário');
         }
-        return response.text(); // ou response.json() se retornar um JSON
+        return response.text(); 
     })
     .then(data => {
-        alert(data); // Exibe uma mensagem de sucesso ou erro
-        document.getElementById('cadastroForm').reset(); // Limpa o formulário após o envio
+        alert(data); 
+        document.getElementById('cadastroForm').reset(); 
     })
     .catch(error => {
         alert('Erro: ' + error.message);
