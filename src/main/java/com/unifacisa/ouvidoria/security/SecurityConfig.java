@@ -35,11 +35,13 @@ public class SecurityConfig {
                 .requestMatchers(new AntPathRequestMatcher("/funcionario/**")).hasRole("FUNCIONARIO")
                 .requestMatchers(new AntPathRequestMatcher("/user/**")).hasRole("USER")
                 .requestMatchers(new AntPathRequestMatcher("/api/solicitacao")).hasRole("USER")
+                .requestMatchers(new AntPathRequestMatcher("/solicitacao")).hasRole("USER")
+
                 .anyRequest().authenticated()
             )
             .formLogin(form -> form
-                .loginPage("/login")  // Define a página de login
-                .successHandler(authenticationSuccessHandler())  // Chama o handler de sucesso
+                .loginPage("/login")
+                .successHandler(authenticationSuccessHandler())  
                 .permitAll()
             )
             .logout(logout -> logout
@@ -65,11 +67,11 @@ public class SecurityConfig {
             public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
                                                 Authentication authentication) throws IOException, ServletException {
                 if (authentication.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_USER"))) {
-                    response.sendRedirect("/solicitacao.html");  // Redireciona o usuário comum
+                    response.sendRedirect("/solicitacao");
                 } else if (authentication.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_FUNCIONARIO"))) {
-                    response.sendRedirect("/funcionario.html");  // Redireciona o funcionário
+                    response.sendRedirect("/funcionario.html");
                 } else {
-                    response.sendRedirect("/login?error");  // Caso algo dê errado
+                    response.sendRedirect("/login?error");
                 }
             }
         };

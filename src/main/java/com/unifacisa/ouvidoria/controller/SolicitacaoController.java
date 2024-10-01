@@ -36,4 +36,10 @@ public class SolicitacaoController {
         Usuario usuario = usuarioRepository.findByUsername(userDetails.getUsername()).orElseThrow();
         return solicitacaoRepository.findByUsuario(usuario);
     }
+    
+    @GetMapping("/solicitacao")
+    public String exibirFormularioSolicitacao() {
+        return "solicitacao"; 
+    }
+
 }
