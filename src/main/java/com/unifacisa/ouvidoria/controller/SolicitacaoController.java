@@ -26,10 +26,11 @@ public class SolicitacaoController {
     private UsuarioRepository usuarioRepository;
 
     @PostMapping
-    public Solicitacao criarSolicitacao(@RequestBody Solicitacao solicitacao, @AuthenticationPrincipal UserDetails userDetails) {
+    public Solicitacao criarSolicitacao(@RequestBody Solicitacao solicitacao, @AuthenticationPrincipal UserDetails userDetails) throws Exception {
         Usuario usuario = usuarioRepository.findByUsername(userDetails.getUsername()).orElseThrow();
         solicitacao.setUsuario(usuario);
         solicitacao.setDataCriacao(LocalDateTime.now());
+  
         return solicitacaoRepository.save(solicitacao);
     }
 

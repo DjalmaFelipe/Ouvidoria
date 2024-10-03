@@ -21,22 +21,19 @@ public class Solicitacao {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="id")
     private Long id;
-    
     @Column(name="nome")
     private String nome;
     @Column(name="descricao")
     private String descricao;
     @Column(name="data")
     private LocalDateTime dataCriacao;
-    
+    @Column(name="resposta")
+    private String resposta;
     @Column(name="status")
     @Enumerated(EnumType.STRING)
     private Status status;
-    
-    @Column(name="resposta")
-    private String resposta;
-    
-    public String getResposta() {
+
+	public String getResposta() {
 		return resposta;
 	}
 
