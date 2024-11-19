@@ -1,5 +1,7 @@
 package com.unifacisa.ouvidoria.entity;
 
+import java.time.LocalDate;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -21,6 +23,33 @@ public class Usuario {
     @Column(name = "funcao")
     private String role;
     
+    // Felipe -> INI - adicionando atributos para acrescentar o modelo de rating *********
+    @Column(name = "idade")
+    private int age;
+    @Column(name = "data_de_cadastro")
+    private LocalDate dataDeCadastro;
+    @Column(name = "interacoes")
+    private int interacoes;
+    // Felipe -> FIM - *******************************************************************
+    
+    public int getAge() {
+		return age;
+	}
+	public void setAge(int age) {
+		this.age = age;
+	}
+	public LocalDate getDataDeCadastro() {
+		return dataDeCadastro;
+	}
+	public void setDataDeCadastro(LocalDate dataDeCadastro) {
+		this.dataDeCadastro = dataDeCadastro;
+	}
+	public int getInteracoes() {
+		return interacoes;
+	}
+	public void setInteracoes(int interacoes) {
+		this.interacoes = interacoes;
+	}
 	public String getUsername() {
 		return username;
 	}

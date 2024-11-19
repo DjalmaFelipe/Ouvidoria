@@ -5,12 +5,16 @@ document.getElementById('cadastroForm').addEventListener('submit', function(even
     const username = document.getElementById('username').value;
     const password = document.getElementById('password').value;
     const role = document.getElementById('role').value;
-
+	const age = document.getElementById('age').value;
     
     const usuarioData = {
         username: username,
         password: password,
-        role: role
+        role: role,
+		
+		// Felipe -> INI - adicionando atributos para acrescentar o modelo de rating *********
+		age: age
+		// Felipe -> FIM - *******************************************************************
     };
 
    

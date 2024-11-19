@@ -1,5 +1,7 @@
 package com.unifacisa.ouvidoria.controller;
 
+import java.time.LocalDate;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -34,7 +36,10 @@ public class RegistroController {
         novoUsuario.setUsername(usuarioDTO.getUsername());
         novoUsuario.setPassword(senhaCodificada);
         novoUsuario.setRole(usuarioDTO.getRole());
-
+        // Felipe -> INI - adicionando atributos para acrescentar o modelo de rating *********
+        novoUsuario.setAge(usuarioDTO.getAge());
+        novoUsuario.setDataDeCadastro(LocalDate.now());
+        // Felipe -> FIM - *******************************************************************
         usuarioRepository.save(novoUsuario);
 
         return "Usuário registrado com sucesso!";
