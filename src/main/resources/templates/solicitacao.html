@@ -17,6 +17,7 @@
 
         <button type="submit">Criar Solicitação</button>
     </form>
+	
 
     <h3>Minhas Solicitações</h3>
     <ul id="listaSolicitacoes"></ul> 
@@ -70,13 +71,50 @@
                     solicitacoes.forEach(solicitacao => {
                         const item = document.createElement('li');
                         item.textContent = `${solicitacao.nome} - ${solicitacao.descricao} (Criada em: ${new Date(solicitacao.dataCriacao).toLocaleDateString()}) ${solicitacao.status} ${solicitacao.resposta}`;
-                        lista.appendChild(item);
+						const notaInput = document.createElement('input');
+										notaInput.className = 'input-nota';
+						                notaInput.type = 'number';
+						                notaInput.min = 1;
+						                notaInput.max = 5;
+						                notaInput.placeholder = 'Avalie (1-5)';
+						                notaInput.id = `nota-${solicitacao.id}`;
+
+						            
+						                const botaoAvaliar = document.createElement('button');
+						                botaoAvaliar.textContent = 'Avaliar';
+										botaoAvaliar.className = 'botao-avaliar';
+						                botaoAvaliar.onclick = function() {
+						                    const nota = parseInt(document.getElementById(`nota-${solicitacao.id}`).value, 10);
+						                    if (nota >= 1 && nota <= 5) {
+						                        avaliarSolicitacao(solicitacao.id, nota);
+						                    } else {
+						                        alert('Por favor, insira uma nota válida entre 1 e 5.');
+						                    }
+						                };
+						item.appendChild(notaInput);
+						item.appendChild(botaoAvaliar);
+						lista.appendChild(item);
                     });
                 })
                 .catch(error => {
                     console.error('Erro ao carregar solicitações:', error);
                 });
             }
+			function avaliarSolicitacao(id, nota) {
+			        fetch(`/api/solicitacao/${id}/avaliar?nota=${nota}`, {
+			            method: 'POST'
+			        })
+			        .then(response => {
+			            if (!response.ok) {
+			                throw new Error('Erro ao avaliar a solicitação');
+			            }
+			            alert('Solicitação avaliada com sucesso!');
+			            carregarSolicitacoes();
+			        })
+			        .catch(error => {
+			            alert('Erro ao enviar avaliação: ' + error.message);
+			        });
+			    }
         });
     </script>
 </body>

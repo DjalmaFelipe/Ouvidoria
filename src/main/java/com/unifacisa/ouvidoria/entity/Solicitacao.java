@@ -32,6 +32,8 @@ public class Solicitacao {
     @Column(name="status")
     @Enumerated(EnumType.STRING)
     private Status status;
+    @Column(name="nota")
+    private int nota;
 
 	public String getResposta() {
 		return resposta;
@@ -91,5 +93,15 @@ public class Solicitacao {
 
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
+	}
+
+	public int getNota() {
+		return nota;
+	}
+
+	public void setNota(int nota) {
+		this.nota = nota;
 	}  
+	
+	
 }

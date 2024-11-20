@@ -49,6 +49,13 @@ public class SolicitacaoController {
         solicitacaoRepository.save(solicitacao);
         return ResponseEntity.ok().build();
     }
-
+    
+    @PostMapping("/{id}/avaliar")
+    public ResponseEntity<?> avaliarRespostaSolicitacao(@PathVariable Long id, @RequestParam int nota){
+    	Solicitacao solicitacao = solicitacaoRepository.findById(id).orElseThrow(() -> new RuntimeException("Solicitação não encontrada."));
+    	solicitacao.setNota(nota);
+    	solicitacaoRepository.save(solicitacao);
+    	return ResponseEntity.ok().build();
+    }
 
 }
