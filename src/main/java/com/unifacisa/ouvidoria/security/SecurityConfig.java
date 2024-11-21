@@ -36,6 +36,7 @@ public class SecurityConfig {
                     .requestMatchers(new AntPathRequestMatcher("/static/**")).permitAll()
                     .requestMatchers(new AntPathRequestMatcher("/js/**")).permitAll()
                     .requestMatchers(new AntPathRequestMatcher("/css/**")).permitAll()
+                    .requestMatchers(new AntPathRequestMatcher("api/churn/prever")).permitAll()
                     .requestMatchers(new AntPathRequestMatcher("/funcionario/**")).hasRole("FUNCIONARIO")
                     .requestMatchers(new AntPathRequestMatcher("/user/**")).hasRole("USER")
                     .requestMatchers(new AntPathRequestMatcher("/api/solicitacao")).hasRole("USER")

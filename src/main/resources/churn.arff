@@ -1,0 +1,16 @@
+@relation churn
+
+@attribute idade numeric
+@attribute tempo_assinatura numeric
+@attribute satisfacao numeric
+@attribute interacoes numeric
+@attribute churn {sim, nao}
+
+@data
+25, 12, 4.5, 3, nao
+40, 24, 3.0, 5, sim
+30, 8, 2.5, 7, sim
+50, 36, 5.0, 1, nao
+28, 18, 3.5, 4, nao
+35, 15, 2.0, 6, sim
+60, 40, 4.7, 2, nao

@@ -1,6 +1,7 @@
 package com.unifacisa.ouvidoria.entity;
 
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -39,6 +40,15 @@ public class Usuario {
     private LocalDate dataDeCadastro;
     @Column(name = "interacoes")
     private int interacoes;
+    @Column(name = "media_avaliacoes")
+    private double mediaAvaliacoes;
+    
+    public double getTempoDeCadastro() {
+    	LocalDate dataAtual = LocalDate.now();
+        long anosInteiros = ChronoUnit.YEARS.between(this.dataDeCadastro, dataAtual);
+        double anosComDecimal = anosInteiros + (double) ChronoUnit.DAYS.between(this.dataDeCadastro, dataAtual) / 365.25;
+        return anosComDecimal;
+    }
     // Felipe -> FIM - *******************************************************************
 
 }
