@@ -30,6 +30,8 @@ public class Usuario {
     private String username;
     @Column(name = "senha")
     private String password;
+    @Column(name = "email")
+    private String email;
     @Column(name = "funcao")
     private String role;
     

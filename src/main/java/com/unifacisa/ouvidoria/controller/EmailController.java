@@ -20,8 +20,8 @@ public class EmailController {
 
 	} */
 	@GetMapping ("/email")
-	public String enviaremail () {
-		emailService.enviarEmail("djalma.bezerra@maisunifacisa.com.br", "Teste", "Teste");
+	public String enviaremail (@RequestParam String email) {
+		emailService.enviarEmail(email, "Cadastro na ouvidoria", "Seja bem vindo seu cadastro foi relaizado na ouvidoria");
 		return "Email enviado com sucesso!";
 				
 	}

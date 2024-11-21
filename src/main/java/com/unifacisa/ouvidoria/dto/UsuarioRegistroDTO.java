@@ -16,6 +16,7 @@ import lombok.Setter;
 public class UsuarioRegistroDTO {
     private String username;
     private String password;
+    private String email;
     private String role;
     
     // Felipe -> INI - adicionando atributos no DTO para implementar serviço de Rating ****

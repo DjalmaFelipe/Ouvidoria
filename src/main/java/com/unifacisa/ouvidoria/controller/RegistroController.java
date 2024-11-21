@@ -34,6 +34,7 @@ public class RegistroController {
 
         Usuario novoUsuario = new Usuario();
         novoUsuario.setUsername(usuarioDTO.getUsername());
+        novoUsuario.setEmail(usuarioDTO.getEmail());
         novoUsuario.setPassword(senhaCodificada);
         novoUsuario.setRole(usuarioDTO.getRole());
         // Felipe -> INI - adicionando atributos para acrescentar o modelo de rating *********
