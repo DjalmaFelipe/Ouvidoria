@@ -9,7 +9,6 @@ import weka.core.Instances;
 import weka.core.converters.ConverterUtils.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import com.unifacisa.ouvidoria.entity.Usuario;

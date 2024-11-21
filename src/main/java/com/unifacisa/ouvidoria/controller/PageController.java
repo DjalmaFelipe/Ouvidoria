@@ -20,4 +20,9 @@ public class PageController {
     public String showSolicitacaoPage() {
         return "solicitacao"; 
     }
+    
+    @GetMapping("/churn")
+    public String showChurnPage() {
+        return "churn"; 
+    }
 }

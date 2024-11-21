@@ -51,6 +51,11 @@ button {
 	margin: 1%;
 }
 
+.botao-churn{
+	width: 10%;
+	margin: 1%;
+}
+
 
 button:hover {
     background-color: #218838;

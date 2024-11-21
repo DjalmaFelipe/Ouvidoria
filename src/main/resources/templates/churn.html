@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Churn Prediction</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            text-align: center;
+        }
+        input, button {
+            padding: 10px;
+            margin: 10px;
+            font-size: 16px;
+        }
+        #response {
+            margin-top: 20px;
+            font-size: 18px;
+            color: green;
+        }
+    </style>
+</head>
+<body>
+    <h1>Previsão de Churn</h1>
+    <p>Digite o nome do usuario para avaliar se há a possibilidade de cancelamento iminente:</p>
+    <input type="text" id="nome" placeholder="Digite o nome" />
+    <button onclick="preverChurn()">Prever</button>
+    <div id="response"></div>
+
+    <script>
+        async function preverChurn() {
+            const nome = document.getElementById('nome').value;
+            if (!nome) {
+                alert("Por favor, insira um nome.");
+                return;
+            }
+
+            try {
+                const response = await fetch(`/api/churn/prever?nome=${encodeURIComponent(nome)}`);
+                if (response.ok) {
+                    const resultado = await response.text();
+                    document.getElementById('response').textContent = `Resultado: ${resultado}`;
+                } else {
+                    document.getElementById('response').textContent = "Erro ao prever o churn.";
+                }
+            } catch (error) {
+                console.error("Erro:", error);
+                document.getElementById('response').textContent = "Erro ao se conectar ao servidor.";
+            }
+        }
+    </script>
+</body>
+</html>
