@@ -28,6 +28,7 @@ public class SolicitacaoController {
     @PostMapping
     public Solicitacao criarSolicitacao(@RequestBody Solicitacao solicitacao, @AuthenticationPrincipal UserDetails userDetails) throws Exception {
         Usuario usuario = usuarioRepository.findByUsername(userDetails.getUsername()).orElseThrow();
+        usuario.setInteracoes(usuario.getInteracoes() + 1);
         solicitacao.setUsuario(usuario);
         solicitacao.setDataCriacao(LocalDateTime.now());
   
@@ -54,6 +55,9 @@ public class SolicitacaoController {
     public ResponseEntity<?> avaliarRespostaSolicitacao(@PathVariable Long id, @RequestParam int nota){
     	Solicitacao solicitacao = solicitacaoRepository.findById(id).orElseThrow(() -> new RuntimeException("Solicitação não encontrada."));
     	solicitacao.setNota(nota);
+    	Usuario usuario  = solicitacao.getUsuario();
+    	usuario.setMediaAvaliacoes(nota + usuario.getMediaAvaliacoes() / 2);
+    	usuarioRepository.save(usuario);
     	solicitacaoRepository.save(solicitacao);
     	return ResponseEntity.ok().build();
     }
