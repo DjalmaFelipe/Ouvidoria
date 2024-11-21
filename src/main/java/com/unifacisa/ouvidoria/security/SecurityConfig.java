@@ -27,6 +27,7 @@ public class SecurityConfig {
             		.requestMatchers(new AntPathRequestMatcher("/h2-console/**")).permitAll()
                     .requestMatchers(new AntPathRequestMatcher("/swagger-ui/index.html")).permitAll()
                     .requestMatchers(new AntPathRequestMatcher("/swagger-ui/**")).permitAll()
+                    .requestMatchers(new AntPathRequestMatcher("/email")).permitAll()
                     .requestMatchers(new AntPathRequestMatcher("/swagger-ui.html")).permitAll()
                     .requestMatchers(new AntPathRequestMatcher("/v3/api-docs/**")).permitAll()
                     .requestMatchers(new AntPathRequestMatcher("/login")).permitAll()

@@ -20,7 +20,7 @@ public class UsuarioService implements UserDetailsService {
 
     @Autowired
     private UsuarioRepository usuarioRepository;
-
+    
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
        
@@ -30,5 +30,7 @@ public class UsuarioService implements UserDetailsService {
         List<GrantedAuthority> authorities = List.of(new SimpleGrantedAuthority(usuario.getRole()));
 
         return new User(usuario.getUsername(), usuario.getPassword(), authorities);
+        
+        
     }
 }
