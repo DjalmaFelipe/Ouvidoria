@@ -35,7 +35,7 @@ public class Usuario {
     @Column(name = "funcao")
     private String role;
     
-    // Felipe -> INI - adicionando atributos para acrescentar o modelo de rating *********
+    // Felipe -> INI - adicionando atributos para acrescentar o modelo de rating e IA*********
     @Column(name = "idade")
     private int age;
     @Column(name = "data_de_cadastro")
